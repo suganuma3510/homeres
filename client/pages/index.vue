@@ -1,89 +1,65 @@
 <template>
-  <v-row justify="center" align="center">
-    <v-col cols="12" sm="8" md="6">
-      <div class="text-center">
-        <logo />
-        <vuetify-logo />
-      </div>
-      <v-card>
-        <v-card-title class="headline">
-          Welcome to the Vuetify + Nuxt.js template
-        </v-card-title>
-        <v-card-text>
-          <p>Vuetify is a progressive Material Design component framework for Vue.js. It was designed to empower developers to create amazing applications.</p>
-          <p>
-            For more information on Vuetify, check out the <a
-              href="https://vuetifyjs.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              documentation
-            </a>.
-          </p>
-          <p>
-            If you have questions, please join the official <a
-              href="https://chat.vuetifyjs.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="chat"
-            >
-              discord
-            </a>.
-          </p>
-          <p>
-            Find a bug? Report it on the github <a
-              href="https://github.com/vuetifyjs/vuetify/issues"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="contribute"
-            >
-              issue board
-            </a>.
-          </p>
-          <p>Thank you for developing with Vuetify and I look forward to bringing more exciting features in the future.</p>
-          <div class="text-xs-right">
-            <em><small>&mdash; John Leider</small></em>
+  <div id="index-area">
+    <v-row class="top_contents fill-height" justify="center" align="center">
+      <v-col cols="12" sm="8" md="6">
+        <div class="text-center">
+          <h1>HOMERES</h1>
+          <Logo />
+          <h2>Turn your house into a restaurant</h2>
+          <div class="text-contents repeating-gradient">
+            <p>
+              本サービスは、デリバリーやテイクアウトを行っている飲食店のみを探し出し、
+              その飲食店のジャンルや、位置、営業情報などを提供するサービス。<br />
+              『HOMERES(ホームレス)』とは、我が家で飲食店の食べ物を食べることができる、
+              『Home is restaurant』をコンセプトとしています。
+            </p>
           </div>
-          <hr class="my-3">
-          <a
-            href="https://nuxtjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Nuxt Documentation
-          </a>
-          <br>
-          <a
-            href="https://github.com/nuxt/nuxt.js"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Nuxt GitHub
-          </a>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer />
-          <v-btn
-            color="primary"
-            nuxt
-            to="/inspire"
-          >
-            Continue
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-col>
-  </v-row>
+        </div>
+      </v-col>
+    </v-row>
+  </div>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
-import VuetifyLogo from '~/components/VuetifyLogo.vue'
+import Logo from "~/components/Logo.vue";
 
 export default {
   components: {
     Logo,
-    VuetifyLogo
-  }
-}
+  },
+};
 </script>
+<style>
+.top_contents {
+  height: 100vh;
+  background-image: url(../static/images/top_page_image.jpg);
+}
+
+.text-center h1 {
+  font-size: 7.5vw;
+  font-weight: 100;
+  font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN",
+    "Hiragino Sans", Meiryo, sans-serif;
+}
+
+.text-center h2 {
+  font-weight: 100;
+  font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN",
+    "Hiragino Sans", Meiryo, sans-serif;
+}
+
+.text-contents {
+  padding: 40px 40px 20px 40px;
+  margin: 25px;
+}
+
+.repeating-gradient {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    rgba(255, 0, 0, 0.25),
+    rgba(255, 0, 0, 0.25) 5px,
+    rgba(0, 0, 255, 0.25) 5px,
+    rgba(0, 0, 255, 0.25) 10px
+  );
+}
+</style>
