@@ -1,19 +1,21 @@
 <template>
   <div id="index-area">
     <v-row class="top_contents fill-height" justify="center" align="center">
-      <v-col cols="12" sm="8" md="6">
+      <v-col cols="12" sm="10" md="6" class="coll-left">
+        <h1>HOME<br />RES</h1>
+        <h2>Turn your house into a restaurant</h2>
+      </v-col>
+
+      <v-col cols="12" sm="10" md="6" class="coll-right repeating-gradient">
         <div class="text-center">
-          <h1>HOMERES</h1>
           <Logo />
-          <h2>Turn your house into a restaurant</h2>
-          <div class="text-contents repeating-gradient">
-            <p>
-              本サービスは、デリバリーやテイクアウトを行っている飲食店のみを探し出し、
-              その飲食店のジャンルや、位置、営業情報などを提供するサービス。<br />
-              『HOMERES(ホームレス)』とは、我が家で飲食店の食べ物を食べることができる、
-              『Home is restaurant』をコンセプトとしています。
-            </p>
-          </div>
+
+          <p>
+            本サービスは、デリバリーやテイクアウトを行っている飲食店のみを探し出し、<br />
+            その飲食店のジャンルや、位置、営業情報などを提供するサービス。<br />
+            『HOMERES(ホームレス)』とは、我が家で飲食店の食べ物を食べることができる、<br />
+            『Home is restaurant』をコンセプトとしています。
+          </p>
         </div>
       </v-col>
     </v-row>
@@ -35,22 +37,26 @@ export default {
   background-image: url(../static/images/top_page_image.jpg);
 }
 
-.text-center h1 {
-  font-size: 7.5vw;
+.coll-left {
+  margin-top: 5vh;
+}
+
+.coll-left h1 {
+  font-size: 15vw;
   font-weight: 100;
+  line-height: 0.7em;
   font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN",
     "Hiragino Sans", Meiryo, sans-serif;
 }
 
-.text-center h2 {
+.coll-left h2 {
+  margin-top: 20px;
+  margin-left: 0.2em;
+  font-size: 5vw;
   font-weight: 100;
+  line-height: 0.8em;
   font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN",
     "Hiragino Sans", Meiryo, sans-serif;
-}
-
-.text-contents {
-  padding: 40px 40px 20px 40px;
-  margin: 25px;
 }
 
 .repeating-gradient {
