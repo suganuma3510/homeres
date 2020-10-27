@@ -5,7 +5,7 @@
 </template>
 <style>
 .homeres_logo img {
-  height: 200px;
-  width: 200px;
+  height: 30%;
+  width: 30%;
 }
 </style>

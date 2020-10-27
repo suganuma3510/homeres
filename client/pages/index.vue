@@ -19,11 +19,13 @@
         </div>
       </v-col>
     </v-row>
+    <SearchForm />
   </div>
 </template>
 
 <script>
 import Logo from "~/components/Logo.vue";
+import SearchForm from "~/components/search_form.vue";
 
 export default {
   components: {

@@ -3,11 +3,7 @@
     <Header />
 
     <v-main>
-      <v-container>
-        <v-content>
-          <nuxt />
-        </v-content>
-      </v-container>
+      <nuxt />
     </v-main>
 
     <v-footer :absolute="!fixed" app>
