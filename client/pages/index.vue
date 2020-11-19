@@ -20,7 +20,7 @@
       </v-col>
     </v-row>
     <SearchForm />
-  </div>
+	</div>
 </template>
 
 <script>
@@ -30,6 +30,21 @@ import SearchForm from "~/components/search_form.vue";
 export default {
   components: {
     Logo,
+  },
+  async asyncData({ $axios }) {
+    // 取得先のURL
+    const url = "http://server:3000";
+    // リクエスト（Get）
+    $axios
+      .$get(url)
+      .then((res) => {
+        console.log("Success!");
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log("Error");
+        console.log(err);
+      });
   },
 };
 </script>
