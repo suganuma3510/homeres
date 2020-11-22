@@ -1,17 +1,17 @@
 package datastore
 
 import (
-	"os"
-	"fmt"
-	"log"
-	"net/url"
 	"context"
-	"net/http"
-	"io/ioutil"
 	"encoding/json"
+	"fmt"
 	"github.com/joho/godotenv"
 	"github.com/suganuma3510/homeres/domain/model"
 	"github.com/suganuma3510/homeres/domain/repository"
+	"io/ioutil"
+	"log"
+	"net/http"
+	"net/url"
+	"os"
 )
 
 type shopRepository struct{}
@@ -25,7 +25,7 @@ const (
 )
 
 // GetShopList : ぐるなびAPIから飲食店情報を取得
-func (sr shopRepository) GetShopList(context.Context) (*model.Shop, error) {
+func (sr shopRepository) GetShopList(ctx context.Context, param url.Values) (*model.Shop, error) {
 
 	// .envファイル読み込み
 	err := godotenv.Load()
@@ -35,31 +35,23 @@ func (sr shopRepository) GetShopList(context.Context) (*model.Shop, error) {
 	keyid := os.Getenv("ACCESS_KEY")
 
 	// URLパース
-	url, err := url.Parse(ENDPOINT)
+	u, err := url.Parse(ENDPOINT)
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	// Queryメソッドでクエリパラメータのマップを取得
-	q := url.Query()
-
-	// クエリマップに値をセット
-	q.Set("keyid", keyid)
-	q.Set("name", "sushi")
-
-	// クエリパラメータをエンコード
-	url.RawQuery = q.Encode()
+	// APIアクセスキー追加
+	param.Add("keyid", keyid)
+	u.RawQuery = param.Encode()
 
 	// ぐるなびAPIを叩く
-	resp, err := http.Get(url.String())
-
+	resp, err := http.Get(u.String())
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
-
 	if err != nil {
 		fmt.Println(err)
 	}

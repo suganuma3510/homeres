@@ -26,7 +26,10 @@ func NewShopController(ss service.ShopService) ShopController {
 func (sc shopController) GetShopList(c echo.Context) error {
 
 	ctx := c.Request().Context()
-	shops, err := sc.shopService.GetShopList(ctx)
+	param := c.QueryParams()
+
+	shops, err := sc.shopService.GetShopList(ctx, param)
+
 	if err != nil {
 		return c.String(http.StatusBadRequest, "Validate is failed: "+err.Error())
 	}

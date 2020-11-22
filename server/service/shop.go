@@ -4,11 +4,12 @@ import (
 	"context"
 	"github.com/suganuma3510/homeres/domain/model"
 	"github.com/suganuma3510/homeres/domain/repository"
+	"net/url"
 )
 
 // ShopService : ShopにおけるServiceのインターフェース
 type ShopService interface {
-	GetShopList(context.Context) (*model.Shop, error)
+	GetShopList(context.Context, url.Values) (*model.Shop, error)
 }
 
 type shopService struct {
@@ -23,9 +24,9 @@ func NewShopService(sr repository.ShopRepository) ShopService {
 }
 
 // GetShopList : Shopデータのリストを取得する
-func (ss shopService) GetShopList(ctx context.Context) (shops *model.Shop, err error) {
+func (ss shopService) GetShopList(ctx context.Context, param url.Values) (shops *model.Shop, err error) {
 	// Persistence（Repository）を呼出
-	shops, err = ss.shopRepository.GetShopList(ctx)
+	shops, err = ss.shopRepository.GetShopList(ctx, param)
 	if err != nil {
 		return nil, err
 	}

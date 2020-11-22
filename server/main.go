@@ -14,7 +14,7 @@ func main() {
 	shopService := service.NewShopService(shopPersistence)
 	shopController := controller.NewShopController(shopService)
 
-	e.GET("/", shopController.GetShopList)
+	e.GET("shops/search", shopController.GetShopList)
 
 	e.Logger.Fatal(e.Start(":3000"))
 }
