@@ -20,7 +20,8 @@
       </v-col>
     </v-row>
     <SearchForm />
-	</div>
+    <v-btn v-on:click="getShops"> 検索 </v-btn>
+  </div>
 </template>
 
 <script>
@@ -31,20 +32,27 @@ export default {
   components: {
     Logo,
   },
-  async asyncData({ $axios }) {
-    // 取得先のURL
-    const url = "http://server:3000";
-    // リクエスト（Get）
-    $axios
-      .$get(url)
-      .then((res) => {
-        console.log("Success!");
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log("Error");
-        console.log(err);
-      });
+  data() {
+    return {
+      shops: "",
+    };
+  },
+  methods: {
+    getShops() {
+      this.$axios
+        .$get("/api/shops/search", {
+          params: {
+            name: "sushi",
+          },
+        })
+        .then((response) => {
+          console.log("response data", response);
+          this.shops = response;
+        })
+        .catch((error) => {
+          console.log("response error", error);
+        });
+    },
   },
 };
 </script>
