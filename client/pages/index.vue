@@ -20,6 +20,7 @@
       </v-col>
     </v-row>
     <SearchForm />
+    <v-btn v-on:click="getShops"> 検索 </v-btn>
   </div>
 </template>
 
@@ -30,6 +31,28 @@ import SearchForm from "~/components/search_form.vue";
 export default {
   components: {
     Logo,
+  },
+  data() {
+    return {
+      shops: "",
+    };
+  },
+  methods: {
+    getShops() {
+      this.$axios
+        .$get("/api/shops/search", {
+          params: {
+            name: "sushi",
+          },
+        })
+        .then((response) => {
+          console.log("response data", response);
+          this.shops = response;
+        })
+        .catch((error) => {
+          console.log("response error", error);
+        });
+    },
   },
 };
 </script>
