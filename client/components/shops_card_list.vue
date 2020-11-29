@@ -1,95 +1,65 @@
 <template>
-  <div>
-    <v-card
-      v-for="shop in shops"
-      :key="shop.name"
-      :loading="loading"
-      class="mx-auto my-12"
-      max-width="374"
-    >
-      <template slot="progress">
-        <v-progress-linear
-          color="deep-purple"
-          height="10"
-          indeterminate
-        ></v-progress-linear>
-      </template>
+  <v-container>
+    <div class="shops-list">
+      <v-card
+        v-for="shop in shops"
+        :key="shop.name"
+        :loading="loading"
+        class="mx-auto my-12"
+        max-width="250"
+      >
+        <template slot="progress">
+          <v-progress-linear
+            color="deep-purple"
+            height="10"
+            indeterminate
+          ></v-progress-linear>
+        </template>
 
-      <v-img
-        height="250"
-        src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
-      ></v-img>
+        <v-img height="250" :src="shop.image_url.shop_image1"></v-img>
 
-      <v-card-title>{{ shop.name }}</v-card-title>
+        <v-card-title>{{ shop.name }}</v-card-title>
 
-      <v-card-text>
-        <v-row align="center" class="mx-0">
-          <v-rating
-            :value="4.5"
-            color="amber"
-            dense
-            half-increments
-            readonly
-            size="14"
-          ></v-rating>
+        <v-card-text>
+          <v-row align="center" class="mx-0">
+            <div class="grey--text ml-4" v-if="shop.access">
+              {{ shop.code.prefname }}｜{{ shop.access.station }} から
+              {{ shop.access.walk }} 分
+            </div>
+            <div class="grey--text ml-4" v-else>交通アクセス: 記載なし</div>
+            <div class="grey--text ml-4" v-if="shop.budget">
+              平均予算: ¥{{ shop.budget }}
+            </div>
+            <div class="grey--text ml-4" v-else>平均予算: 記載なし</div>
+          </v-row>
 
-          <div class="grey--text ml-4">4.5 (413)</div>
-        </v-row>
+          <div class="my-4 subtitle-1">{{ shop.category }}</div>
+          <div>
+            {{ shop.pr.pr_short }}
+          </div>
+        </v-card-text>
 
-        <div class="my-4 subtitle-1">$ • Italian, Cafe</div>
-
-        <div>
-          Small plates, salads & sandwiches - an intimate setting with 12 indoor
-          seats plus patio seating.
-        </div>
-      </v-card-text>
-
-      <v-divider class="mx-4"></v-divider>
-
-      <v-card-title>Tonight's availability</v-card-title>
-
-      <v-card-text>
-        <v-chip-group
-          v-model="selection"
-          active-class="deep-purple accent-4 white--text"
-          column
-        >
-          <v-chip>5:30PM</v-chip>
-
-          <v-chip>7:30PM</v-chip>
-
-          <v-chip>8:00PM</v-chip>
-
-          <v-chip>9:00PM</v-chip>
-        </v-chip-group>
-      </v-card-text>
-
-      <v-card-actions>
-        <v-btn color="deep-purple lighten-2" text @click="reserve">
-          Reserve
-        </v-btn>
-      </v-card-actions>
-    </v-card>
-  </div>
+        <v-divider class="mx-4"></v-divider>
+        <v-card-actions>
+          <v-btn color="deep-purple lighten-2" text @click="reserve">
+            詳細
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </div>
+  </v-container>
 </template>
-
 <script>
 import { mapGetters, mapMutations } from "vuex";
 export default {
-  data: () => ({
-    loading: false,
-    selection: 1,
-  }),
-
   computed: {
     ...mapGetters({ shops: "shops/shops" }),
   },
-
-  methods: {
-    reserve() {
-      this.loading = true;
-      setTimeout(() => (this.loading = false), 2000);
-    },
-  },
 };
 </script>
+<style>
+.shops-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+</style>

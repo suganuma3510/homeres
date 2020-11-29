@@ -28,7 +28,6 @@
     </v-img>
   </v-hover>
 </template>
-
 <script>
 import CategorySearch from "~/components/category_search.vue";
 import { mapGetters, mapMutations } from "vuex";
