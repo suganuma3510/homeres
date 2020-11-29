@@ -31,14 +31,14 @@
 
 <script>
 import CategorySearch from "~/components/category_search.vue";
+import { mapGetters, mapMutations } from "vuex";
 
 export default {
   props: ["category", "takeout", "deliverly"],
-  data: () => ({
-    shops: "",
-  }),
-
   methods: {
+    ...mapMutations({
+      setShops: "shops/setShops",
+    }),
     validateField() {
       this.$refs.form.validate();
     },
@@ -53,7 +53,7 @@ export default {
         })
         .then((response) => {
           console.log("response data", response);
-          this.shops = response;
+          this.setShops(response.rest);
         })
         .catch((error) => {
           console.log("response error", error);

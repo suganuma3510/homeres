@@ -20,38 +20,18 @@
       </v-col>
     </v-row>
     <SearchForm />
+    <ShopsCardList />
   </div>
 </template>
 
 <script>
 import Logo from "~/components/Logo.vue";
 import SearchForm from "~/components/search_form.vue";
+import ShopsCardList from "~/components/shops_card_list.vue";
 
 export default {
   components: {
     Logo,
-  },
-  data() {
-    return {
-      shops: "",
-    };
-  },
-  methods: {
-    getShops() {
-      this.$axios
-        .$get("/api/shops/search", {
-          params: {
-            name: "sushi",
-          },
-        })
-        .then((response) => {
-          console.log("response data", response);
-          this.shops = response;
-        })
-        .catch((error) => {
-          console.log("response error", error);
-        });
-    },
   },
 };
 </script>

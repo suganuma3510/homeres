@@ -63,12 +63,12 @@
           v-bind:takeout="takeout"
         />
       </v-col>
-      {{ shops }}
     </v-row>
   </v-container>
 </template>
 <script>
 import CategorySearch from "~/components/category_search.vue";
+import { mapGetters, mapMutations } from "vuex";
 
 export default {
   data: () => ({
@@ -78,7 +78,6 @@ export default {
     area: "",
     deliverly: "1",
     takeout: "1",
-    shops: "",
     category: [
       "和食",
       "イタリアン",
@@ -92,6 +91,7 @@ export default {
   }),
 
   computed: {
+    ...mapGetters({ shops: "shops/shops" }),
     rules() {
       const rules = [];
       if (this.max) {
@@ -111,6 +111,7 @@ export default {
   },
 
   methods: {
+    ...mapMutations({ setShops: "shops/setShops" }),
     validateField() {
       this.$refs.form.validate();
     },
@@ -125,7 +126,7 @@ export default {
         })
         .then((response) => {
           console.log("response data", response);
-          this.shops = response;
+          this.setShops(response.rest);
         })
         .catch((error) => {
           console.log("response error", error);
