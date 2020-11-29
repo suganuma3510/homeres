@@ -6,8 +6,10 @@
       <nuxt />
     </v-main>
 
-    <v-footer :absolute="!fixed" app>
-      <span>&copy; {{ new Date().getFullYear() }}</span>
+    <v-footer padless>
+      <v-col class="text-center" cols="12">
+        &copy;{{ new Date().getFullYear() }} — <strong>HOMERES</strong>
+      </v-col>
     </v-footer>
   </v-app>
 </template>
