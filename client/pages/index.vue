@@ -9,18 +9,17 @@
       <v-col cols="12" sm="10" md="6" class="coll-right repeating-gradient">
         <div class="text-center">
           <Logo />
-
-          <p>
+          <p class="font-weight-bold">
             本サービスは、デリバリーやテイクアウトを行っている飲食店のみを探し出し、<br />
-            その飲食店のジャンルや、位置、営業情報などを提供するサービス。<br />
-            『HOMERES(ホームレス)』とは、我が家で飲食店の食べ物を食べることができる、<br />
-            『Home is restaurant』をコンセプトとしています。
+            その飲食店のジャンルや、位置、営業情報などを提供するサービスです。<br />
           </p>
+          <v-btn href="#form-heading" color="#F9A825" large>
+            <v-icon left dark>mdi-magnify mdi-24px</v-icon>let's serach !
+          </v-btn>
         </div>
       </v-col>
     </v-row>
     <SearchForm />
-    <v-btn v-on:click="getShops"> 検索 </v-btn>
   </div>
 </template>
 
@@ -61,11 +60,9 @@ export default {
   height: 100vh;
   background-image: url(../static/images/top_page_image.jpg);
 }
-
 .coll-left {
   margin-top: 5vh;
 }
-
 .coll-left h1 {
   font-size: 15vw;
   font-weight: 100;
@@ -73,7 +70,6 @@ export default {
   font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN",
     "Hiragino Sans", Meiryo, sans-serif;
 }
-
 .coll-left h2 {
   margin-top: 20px;
   margin-left: 0.2em;
@@ -83,7 +79,6 @@ export default {
   font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN",
     "Hiragino Sans", Meiryo, sans-serif;
 }
-
 .repeating-gradient {
   background-image: repeating-linear-gradient(
     -45deg,

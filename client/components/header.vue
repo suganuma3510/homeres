@@ -7,18 +7,19 @@
     dark
     v-bind:class="{ active: collapseOnScroll }"
   >
-  
     <v-app-bar-nav-icon x-large v-on:mouseover="open"></v-app-bar-nav-icon>
-    <v-toolbar-title>HOMERES</v-toolbar-title>
+    <v-toolbar-title class="header-title"
+      ><nuxt-link to="/">HOMERES</nuxt-link></v-toolbar-title
+    >
 
     <v-spacer></v-spacer>
     <v-toolbar-title>
-      <v-btn icon>
-        <v-icon>mdi-magnify</v-icon>
+      <v-btn icon href="#form-heading">
+        <v-icon v-on:click="close">mdi-magnify</v-icon>
       </v-btn>
     </v-toolbar-title>
 
-    <v-btn icon  v-if="collapseOnScroll" >
+    <v-btn icon v-if="collapseOnScroll">
       <v-icon v-on:click="close">mdi-send mdi-rotate-180</v-icon>
     </v-btn>
   </v-app-bar>
@@ -42,5 +43,9 @@ export default {
 <style>
 .active {
   margin: 0 8vw;
+}
+.header-title a {
+  text-decoration: none;
+  color: white;
 }
 </style>
