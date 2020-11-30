@@ -41,19 +41,39 @@
 
         <v-divider class="mx-4"></v-divider>
         <v-card-actions>
-          <v-btn color="deep-purple lighten-2" text @click="reserve">
-            詳細
+          <v-btn color="#F9A825" dark @click="showShopInfo(shop)">
+            詳細を見る
           </v-btn>
         </v-card-actions>
       </v-card>
     </div>
+    <ShopDialog :dialog="dialog" @onDialog="onDialog(false)"></ShopDialog>
   </v-container>
 </template>
 <script>
+import ShopDialog from "~/components/shop_dialog.vue";
 import { mapGetters, mapMutations } from "vuex";
 export default {
+  data() {
+    return {
+      dialog: false,
+    };
+  },
+  components: {
+    ShopDialog,
+  },
   computed: {
     ...mapGetters({ shops: "shops/shops" }),
+  },
+  methods: {
+    showShopInfo(shop) {
+      this.onDialog(true);
+      this.setShopInfo(shop);
+    },
+    onDialog(bool) {
+      this.dialog = bool;
+    },
+    ...mapMutations({ setShopInfo: "shops/setShopInfo" }),
   },
 };
 </script>

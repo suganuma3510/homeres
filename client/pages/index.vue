@@ -20,14 +20,14 @@
       </v-col>
     </v-row>
     <SearchForm />
-    <ShopsCardList />
+    <ShopCardList />
   </div>
 </template>
 
 <script>
 import Logo from "~/components/Logo.vue";
 import SearchForm from "~/components/search_form.vue";
-import ShopsCardList from "~/components/shops_card_list.vue";
+import ShopCardList from "~/components/shop_card_list.vue";
 
 export default {
   components: {
