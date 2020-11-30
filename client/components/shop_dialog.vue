@@ -11,7 +11,7 @@
           <v-btn icon dark @click="dialogClose">
             <v-icon>mdi-close</v-icon>
           </v-btn>
-          <v-toolbar-title>Settings</v-toolbar-title>
+          <v-toolbar-title>{{ shop.name }}</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
             <v-btn dark text @click="dialogClose"> Save </v-btn>
@@ -82,6 +82,8 @@
   </v-row>
 </template>
 <script>
+import { mapGetters, mapMutations } from "vuex";
+
 export default {
   props: {
     dialog: false,
@@ -93,9 +95,12 @@ export default {
       widgets: false,
     };
   },
+  computed: {
+    ...mapGetters({ shop: "shops/shop" }),
+  },
   methods: {
     dialogClose() {
-      this.$emit('onDialog')
+      this.$emit("onDialog");
     },
   },
 };
