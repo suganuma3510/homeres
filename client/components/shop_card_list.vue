@@ -1,12 +1,13 @@
 <template>
   <v-container>
-    <div class="shops-list">
+    <div class="shops-list" v-if="shops != null">
       <v-card
         v-for="shop in shops"
         :key="shop.name"
         :loading="loading"
         class="mx-auto my-12"
         max-width="250"
+        @click="showShopInfo(shop)"
       >
         <template slot="progress">
           <v-progress-linear
@@ -16,7 +17,17 @@
           ></v-progress-linear>
         </template>
 
-        <v-img height="250" :src="shop.image_url.shop_image1"></v-img>
+        <v-img
+          height="250"
+          :src="shop.image_url.shop_image1"
+          v-if="shop.image_url.shop_image1"
+        ></v-img>
+        <v-img
+          height="250"
+          :src="shop.image_url.shop_image2"
+          v-else-if="shop.image_url.shop_image2"
+        ></v-img>
+        <v-img height="250" :src="'images/no_image.png'" v-else></v-img>
 
         <v-card-title>{{ shop.name }}</v-card-title>
 
@@ -27,10 +38,6 @@
               {{ shop.access.walk }} 分
             </div>
             <div class="grey--text ml-4" v-else>交通アクセス: 記載なし</div>
-            <div class="grey--text ml-4" v-if="shop.budget">
-              平均予算: ¥{{ shop.budget }}
-            </div>
-            <div class="grey--text ml-4" v-else>平均予算: 記載なし</div>
           </v-row>
 
           <div class="my-4 subtitle-1">{{ shop.category }}</div>
@@ -41,13 +48,11 @@
 
         <v-divider class="mx-4"></v-divider>
         <v-card-actions>
-          <v-btn color="#F9A825" dark @click="showShopInfo(shop)">
-            詳細を見る
-          </v-btn>
+          <v-btn color="#F9A825" text> 詳細 </v-btn>
         </v-card-actions>
       </v-card>
+      <ShopDialog :dialog="dialog" @onDialog="onDialog(false)" v-if="dialog" />
     </div>
-    <ShopDialog :dialog="dialog" @onDialog="onDialog(false)"></ShopDialog>
   </v-container>
 </template>
 <script>
