@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <div class="shops-list">
+    <div class="shops-list" v-if="shops != null">
       <v-card
         v-for="shop in shops"
         :key="shop.name"
@@ -38,10 +38,6 @@
               {{ shop.access.walk }} 分
             </div>
             <div class="grey--text ml-4" v-else>交通アクセス: 記載なし</div>
-            <div class="grey--text ml-4" v-if="shop.budget">
-              平均予算: ¥{{ shop.budget }}
-            </div>
-            <div class="grey--text ml-4" v-else>平均予算: 記載なし</div>
           </v-row>
 
           <div class="my-4 subtitle-1">{{ shop.category }}</div>
@@ -52,11 +48,11 @@
 
         <v-divider class="mx-4"></v-divider>
         <v-card-actions>
-          <v-btn color="#F9A825" text @click="showShopInfo(shop)"> 詳細 </v-btn>
+          <v-btn color="#F9A825" text> 詳細 </v-btn>
         </v-card-actions>
       </v-card>
+      <ShopDialog :dialog="dialog" @onDialog="onDialog(false)" v-if="dialog" />
     </div>
-    <ShopDialog :dialog="dialog" @onDialog="onDialog(false)"></ShopDialog>
   </v-container>
 </template>
 <script>
