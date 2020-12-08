@@ -1,16 +1,20 @@
 package main
 
 import (
-    "net/http"
-
-    "github.com/labstack/echo"
-    _ "github.com/go-sql-driver/mysql"
+	"github.com/labstack/echo"
+	"github.com/suganuma3510/homeres/infra/datastore"
+	"github.com/suganuma3510/homeres/interface/controller"
+	"github.com/suganuma3510/homeres/service"
 )
 
 func main() {
-    e := echo.New()
-    e.GET("/", func(c echo.Context) error {
-        return c.String(http.StatusOK, "Hello world")
-    })
-    e.Logger.Fatal(e.Start(":3000"))
+	e := echo.New()
+
+	shopPersistence := datastore.NewShopRepository()
+	shopService := service.NewShopService(shopPersistence)
+	shopController := controller.NewShopController(shopService)
+
+	e.GET("shops/search", shopController.GetShopList)
+
+	e.Logger.Fatal(e.Start(":3000"))
 }
