@@ -33,7 +33,7 @@ describe('store/shops.js', () => {
     })
 
     describe('shops', () => {
-      test('statusがshopsのshopsが取得できること', () => {
+      test('statusがshopsのshops1,shops2が取得できること', () => {
         expect(store.getters['shops']).toContainEqual(shop1)
         expect(store.getters['shops']).toContainEqual(shop2)
       })
