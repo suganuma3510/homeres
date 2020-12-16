@@ -21,7 +21,7 @@ jobs:
       - checkout
       - run:
           name: client test
-          command: docker-compose run client yarn test
+          command: docker-compose run --rm client yarn test
 
 workflows:
   build-test:
