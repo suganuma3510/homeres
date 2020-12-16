@@ -17,7 +17,6 @@ describe('components/search_form.vue', () => {
   describe('template', () => {
     test('コンポーネントが表示されるか', () => {
       expect(wrapper.exists()).toBe(true)
-      expect(wrapper.classes()).toContain('form-heading');
     })
 
     test('子コンポーネントが表示されるか', () => {
