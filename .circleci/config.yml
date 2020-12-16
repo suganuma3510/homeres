@@ -22,9 +22,12 @@ jobs:
       - run:
           name: client test
           command: docker-compose run --rm client yarn test
+<<<<<<< HEAD
       - run:
           name: server test
           command: docker-compose run --rm server go test -v ./...
+=======
+>>>>>>> develop
 
 workflows:
   build-test:

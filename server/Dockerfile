@@ -3,7 +3,8 @@ FROM golang:1.15-alpine
 WORKDIR /go/src/github.com/suganuma3510/homeres
 ADD . /go/src/github.com/suganuma3510/homeres
 
-ENV GO111MODULE=on
+ENV CGO_ENABLED=0 \
+    GO111MODULE=on
 ENV PORT 3000
 
 RUN apk update && \

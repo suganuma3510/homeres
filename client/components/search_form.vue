@@ -10,6 +10,7 @@
           label="店名・ジャンル・目的"
           placeholder="例：イタリアン、居酒屋"
           outlined
+          clearable
           prepend-inner-icon="mdi-food"
           class="form-area form-text"
         >
@@ -90,6 +91,10 @@ export default {
     ],
   }),
 
+  components: {
+    CategorySearch,
+  },
+
   computed: {
     ...mapGetters({ shops: "shops/shops" }),
     rules() {
@@ -119,7 +124,7 @@ export default {
       this.$axios
         .$get("/api/shops/search", {
           params: {
-            freeword: this.freeword & this.area,
+            freeword: this.freeword + this.area,
             deliverly: this.deliverly,
             takeout: this.takeout,
           },
