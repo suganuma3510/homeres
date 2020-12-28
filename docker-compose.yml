@@ -2,7 +2,9 @@ version: "3"
 
 services:
   client:
-    build: ./client
+    build:
+      context: .
+      dockerfile: ./docker/development/nuxt/Dockerfile
     volumes:
       - ./client:/app
       - client_node_modules:/app/node_modules
@@ -11,7 +13,9 @@ services:
     tty: true
 
   server:
-    build: ./server
+    build:
+      context: .
+      dockerfile: ./docker/development/go/Dockerfile
     volumes:
       - ./server:/go/src/github.com/suganuma3510/homeres
     ports:
