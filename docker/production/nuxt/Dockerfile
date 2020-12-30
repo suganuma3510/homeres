@@ -4,17 +4,17 @@ ENV LANG=C.UTF-8 \
     TZ=Asia/Tokyo
 
 ENV HOST 0.0.0.0
-ENV PORT 8080
+ENV PORT 80
 
 WORKDIR /app
-ADD . /app
 
-RUN apk update && \
-    apk upgrade && \
-    npm install -g n && \
-    yarn install && \
-    rm -rf /var/cache/apk/*
+COPY package*.json /app
+COPY . /app
+
+RUN yarn install
+
+RUN yarn run build
 
 EXPOSE ${PORT}
 
-CMD ["yarn", "dev"]
+CMD ["yarn", "start"]
