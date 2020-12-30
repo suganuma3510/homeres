@@ -14,11 +14,6 @@ jobs:
       - run:
           name: docker-compose build
           command: docker-compose build
-  test:
-    executor:
-      name: default
-    steps:
-      - checkout
       - run:
           name: client test
           command: docker-compose run --rm client yarn test
@@ -30,6 +25,3 @@ workflows:
   build-test:
     jobs:
       - build
-      - test:
-          requires:
-            - build
