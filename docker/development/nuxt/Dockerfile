@@ -7,7 +7,7 @@ ENV HOST 0.0.0.0
 ENV PORT 8080
 
 WORKDIR /app
-ADD . /app
+ADD ./client /app
 
 RUN apk update && \
     apk upgrade && \
