@@ -3,7 +3,7 @@ version: "3"
 services:
   client:
     build:
-      context: .
+      context: ./client
       dockerfile: ./docker/development/nuxt/Dockerfile
     volumes:
       - ./client:/app
@@ -14,7 +14,7 @@ services:
 
   server:
     build:
-      context: .
+      context: ./server
       dockerfile: ./docker/development/go/Dockerfile
     volumes:
       - ./server:/go/src/github.com/suganuma3510/homeres
