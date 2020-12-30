@@ -4,7 +4,7 @@ services:
   client:
     build:
       context: ./client
-      dockerfile: ./docker/development/nuxt/Dockerfile
+      dockerfile: ../docker/development/nuxt/Dockerfile
     volumes:
       - ./client:/app
       - client_node_modules:/app/node_modules
@@ -15,7 +15,7 @@ services:
   server:
     build:
       context: ./server
-      dockerfile: ./docker/development/go/Dockerfile
+      dockerfile: ../docker/development/go/Dockerfile
     volumes:
       - ./server:/go/src/github.com/suganuma3510/homeres
     ports:
