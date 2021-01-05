@@ -1,20 +1,28 @@
-FROM golang:1.15-alpine
+FROM golang:1.15-alpine as builder
 
 WORKDIR /go/src/github.com/suganuma3510/homeres
-ADD . /go/src/github.com/suganuma3510/homeres
 
-ENV CGO_ENABLED=0 \
-    GO111MODULE=on
-ENV PORT 3000
+ENV GO111MODULE=on
 
-RUN apk update && \
-    apk add --no-cache git && \
-    go get github.com/go-sql-driver/mysql && \
-    go get github.com/google/uuid && \
-    go get github.com/gorilla/mux && \
-    go get github.com/labstack/echo/... && \
-    go get github.com/pilu/fresh
+COPY ./server/go.mod ./server/go.sum ./
+RUN go mod download
 
-EXPOSE ${PORT}
+COPY ./server ./
 
-CMD ["fresh"]
+RUN CGO_ENABLED=0 \
+    GOOS=linux \
+    GOARCH=amd64 \
+    go build -ldflags="-w -s" -o /go/bin/app
+
+FROM alpine:latest
+
+ARG gurunavi_api_key
+ENV GURUNAVI_API_KEY=$gurunavi_api_key
+
+RUN apk --no-cache add ca-certificates
+
+COPY --from=builder /go/bin/app /go/bin/app
+
+EXPOSE 3000
+
+ENTRYPOINT [ "/go/bin/app" ]
