@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/joho/godotenv"
 	"github.com/suganuma3510/homeres/domain/model"
 	"github.com/suganuma3510/homeres/domain/repository"
 	"io/ioutil"
@@ -28,11 +27,7 @@ const (
 func (sr shopRepository) GetShopList(ctx context.Context, param url.Values) (*model.Shop, error) {
 
 	// .envファイル読み込み
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
-	keyid := os.Getenv("ACCESS_KEY")
+	keyid := os.Getenv("GURUNAVI_API_KEY")
 
 	// URLパース
 	u, err := url.Parse(ENDPOINT)
