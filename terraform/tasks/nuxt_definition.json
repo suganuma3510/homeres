@@ -1,0 +1,35 @@
+[
+  {
+    "name": "homeres-nuxt-app",
+    "image": "${ECR_ARN}",
+    "portMappings": [
+      {
+        "containerPort": 80
+      }
+    ],
+    "memory": 512,
+    "networkMode": "awsvpc",
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-region": "ap-northeast-1",
+        "awslogs-group": "${log_group}",
+        "awslogs-stream-prefix": "nuxt"
+      }
+    },
+    "command": [
+      "yarn", "start"
+    ],
+    "workingDirectory": "/app",
+    "environment": [
+      {
+        "name": "HOST",
+        "value": "0.0.0.0"
+      },
+      {
+        "name": "PORT",
+        "value": "80"
+      }
+    ]
+  }
+]
