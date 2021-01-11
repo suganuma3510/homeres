@@ -11,6 +11,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"github.com/joho/godotenv"
 )
 
 type shopRepository struct{}
@@ -25,7 +26,10 @@ const (
 
 // GetShopList : ぐるなびAPIから飲食店情報を取得
 func (sr shopRepository) GetShopList(ctx context.Context, param url.Values) (*model.Shop, error) {
-
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
 	// .envファイル読み込み
 	keyid := os.Getenv("GURUNAVI_API_KEY")
 
