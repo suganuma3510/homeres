@@ -54,12 +54,15 @@ export default {
     proxy: true
   },
   proxy: {
-    '/api/': {
-      target: 'http://server:3000/',
-      pathRewrite: {
-        '^/api/': '/'
+    '/api/': process.env.NODE_ENV !== 'production' ?
+      {
+        target: 'http://server:3000/',
+        pathRewrite: { '^/api/': '/' }
+      } :
+      {
+        target: 'http://www.homeres.info:3000/',
+        pathRewrite: { '^/api/': '/' }
       }
-    }
   },
 
   // Vuetify module configuration (https://go.nuxtjs.dev/config-vuetify)

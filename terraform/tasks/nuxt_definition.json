@@ -23,6 +23,10 @@
     "workingDirectory": "/app",
     "environment": [
       {
+        "name": "NODE_ENV",
+        "value": "production"
+      },
+      {
         "name": "HOST",
         "value": "0.0.0.0"
       },
