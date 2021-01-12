@@ -32,8 +32,7 @@ workflows:
           name: "nuxt ecr build and push"
           context: aws_context
           account-url: AWS_ECR_ACCOUNT_URL
-          path: ./docker/production/nuxt/
-          dockerfile: Dockerfile
+          dockerfile: ./docker/production/nuxt/Dockerfile
           region: AWS_REGION
           repo: "${MY_APP_PREFIX}-nuxt-app"
           tag: "${CIRCLE_SHA1}"
@@ -46,8 +45,7 @@ workflows:
           name: "go ecr build and push"
           context: aws_context
           account-url: AWS_ECR_ACCOUNT_URL
-          path: ./docker/production/go/
-          dockerfile: Dockerfile
+          dockerfile: ./docker/production/go/Dockerfile
           region: AWS_REGION
           repo: "${MY_APP_PREFIX}-go-api"
           tag: "${CIRCLE_SHA1}"
