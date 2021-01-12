@@ -4,10 +4,10 @@ WORKDIR /go/src/github.com/suganuma3510/homeres
 
 ENV GO111MODULE=on
 
-COPY ../../server/go.mod ./server/go.sum ./
+COPY ../../../server/go.mod ./server/go.sum ./
 RUN go mod download
 
-COPY ../../server ./
+COPY ../../../server ./
 
 RUN CGO_ENABLED=0 \
     GOOS=linux \
