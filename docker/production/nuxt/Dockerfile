@@ -8,8 +8,8 @@ ENV PORT 80
 
 WORKDIR /app
 
-COPY ./client/package*.json /app
-COPY ./client /app
+COPY ../../client/package*.json /app
+COPY ../../client /app
 
 RUN yarn install
 
