@@ -138,6 +138,16 @@ resource "aws_security_group_rule" "alb-sg-rule2" {
   security_group_id = aws_security_group.alb-sg.id
 }
 
+resource "aws_security_group_rule" "alb-sg-rule4" {
+  description       = "alb-sg-rule2"
+  type              = "ingress"
+  from_port         = 3000
+  to_port           = 3000
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.alb-sg.id
+}
+
 resource "aws_security_group_rule" "alb-sg-rule3" {
   description       = "alb-sg-rule3"
   type              = "egress"
@@ -159,6 +169,16 @@ resource "aws_security_group_rule" "ecs-service-sg-rule1" {
 }
 
 resource "aws_security_group_rule" "ecs-service-sg-rule2" {
+  description       = "ecs-service-sg-rule1"
+  type              = "ingress"
+  from_port         = 3000
+  to_port           = 3000
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.ecs-service-sg.id
+}
+
+resource "aws_security_group_rule" "ecs-service-sg-rule3" {
   description       = "ecs-service-sg-rule2"
   type              = "egress"
   from_port         = 0

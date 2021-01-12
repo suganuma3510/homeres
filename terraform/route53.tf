@@ -21,7 +21,7 @@ resource "aws_route53_record" "ns_record_for_subdomain" {
   type = "NS"
 }
 
-resource "aws_route53_record" "record" {
+/* resource "aws_route53_record" "record" {
   for_each = {
     for dvo in aws_acm_certificate.certificate.domain_validation_options : dvo.domain_name => {
       name   = dvo.resource_record_name
@@ -35,7 +35,7 @@ resource "aws_route53_record" "record" {
   type            = each.value.type
   zone_id         = data.aws_route53_zone.host-zone.id
   allow_overwrite = true
-}
+} */
 
 resource "aws_route53_record" "alias-record" {
   zone_id = aws_route53_zone.sub-host-zone.zone_id
