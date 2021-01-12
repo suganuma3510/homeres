@@ -1,0 +1,23 @@
+[
+  {
+    "name": "homeres-go-api",
+    "image": "${ECR_ARN}",
+    "portMappings": [
+      {
+        "containerPort": 3000,
+        "hostPort": 3000
+      }
+    ],
+    "memory": 512,
+    "networkMode": "awsvpc",
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-region": "ap-northeast-1",
+        "awslogs-group": "${log_group}",
+        "awslogs-stream-prefix": "go"
+      }
+    },
+    "entryPoint": [ "/go/bin/app" ]
+  }
+]

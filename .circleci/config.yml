@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  aws-ecr: circleci/aws-ecr@6.15.2
+
 executors:
   default:
     machine:
@@ -14,19 +17,42 @@ jobs:
       - run:
           name: docker-compose build
           command: docker-compose build
-  test:
-    executor:
-      name: default
-    steps:
-      - checkout
       - run:
           name: client test
-          command: docker-compose run client yarn test
+          command: docker-compose run --rm client yarn test
+      - run:
+          name: server test
+          command: docker-compose run --rm server go test -v ./...
 
 workflows:
-  build-test:
+  build-and-deploy:
     jobs:
       - build
-      - test:
+      - aws-ecr/build-and-push-image:
+          name: "nuxt ecr build and push"
+          context: aws_context
+          account-url: AWS_ECR_ACCOUNT_URL
+          path: ./docker/production/nuxt/
+          dockerfile: Dockerfile
+          region: AWS_REGION
+          repo: "${MY_APP_PREFIX}-nuxt-app"
+          tag: "${CIRCLE_SHA1}"
           requires:
             - build
+          filters:
+            branches:
+              only: master
+      - aws-ecr/build-and-push-image:
+          name: "go ecr build and push"
+          context: aws_context
+          account-url: AWS_ECR_ACCOUNT_URL
+          path: ./docker/production/go/
+          dockerfile: Dockerfile
+          region: AWS_REGION
+          repo: "${MY_APP_PREFIX}-go-api"
+          tag: "${CIRCLE_SHA1}"
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
