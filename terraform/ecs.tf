@@ -2,7 +2,7 @@ variable "ecr_nuxt_image" {}
 variable "ecr_go_image" {}
 
 resource "aws_ecs_cluster" "ecs-cluster" {
-  name = "ecs-cluster"
+  name = "${var.name}-cluster"
 }
 
 resource "aws_cloudwatch_log_group" "cloudwatch" {
@@ -29,7 +29,7 @@ data "template_file" "go-container-definitions" {
 }
 
 resource "aws_ecs_task_definition" "nuxt-ecs-task" {
-  family                   = "ecs-task"
+  family                   = "${var.name}-nuxt-task"
   container_definitions    = data.template_file.nuxt-container-definitions.rendered
   requires_compatibilities = ["FARGATE"]
   network_mode             = "awsvpc"
@@ -40,7 +40,7 @@ resource "aws_ecs_task_definition" "nuxt-ecs-task" {
 }
 
 resource "aws_ecs_task_definition" "go-ecs-task" {
-  family                   = "go-ecs-task"
+  family                   = "${var.name}-go-task"
   container_definitions    = data.template_file.go-container-definitions.rendered
   requires_compatibilities = ["FARGATE"]
   network_mode             = "awsvpc"
@@ -51,7 +51,7 @@ resource "aws_ecs_task_definition" "go-ecs-task" {
 }
 
 resource "aws_ecs_service" "nuxt-ecs-service" {
-  name            = "ecs-service"
+  name            = "${var.name}-nuxt-service"
   task_definition = aws_ecs_task_definition.nuxt-ecs-task.arn
   desired_count   = 1
   launch_type     = "FARGATE"
@@ -77,7 +77,7 @@ resource "aws_ecs_service" "nuxt-ecs-service" {
 }
 
 resource "aws_ecs_service" "go-ecs-service" {
-  name            = "go-ecs-service"
+  name            = "${var.name}-go-service"
   task_definition = aws_ecs_task_definition.go-ecs-task.arn
   desired_count   = 1
   launch_type     = "FARGATE"
