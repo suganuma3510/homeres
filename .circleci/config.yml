@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  aws-ecr: circleci/aws-ecr@6.15.2
+
 executors:
   default:
     machine:
@@ -20,8 +23,27 @@ jobs:
       - run:
           name: server test
           command: docker-compose run --rm server go test -v ./...
+  deploy:
+    executor:
+      name: default
+    steps:
+      - aws-ecr/build-and-push-image:
+          name: nuxt ecr build and push
+          context: aws_context
+          account-url: "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
+          path: ./docker/production/nuxt/
+          dockerfile: Dockerfile
+          region: AWS_REGION
+          repo: "${MY_APP_PREFIX}-nuxt-app"
+          tag: "${CIRCLE_SHA1}"
 
 workflows:
   build-test:
     jobs:
       - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
