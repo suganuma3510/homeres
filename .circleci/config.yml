@@ -42,3 +42,17 @@ workflows:
           filters:
             branches:
               only: master
+      - aws-ecr/build-and-push-image:
+          name: "go ecr build and push"
+          context: aws_context
+          account-url: AWS_ECR_ACCOUNT_URL
+          path: ./docker/production/go/
+          dockerfile: Dockerfile
+          region: AWS_REGION
+          repo: "${MY_APP_PREFIX}-go-api"
+          tag: "${CIRCLE_SHA1}"
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
