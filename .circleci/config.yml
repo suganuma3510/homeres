@@ -71,7 +71,7 @@ workflows:
       - aws-ecs/deploy-service-update:
           name: go-deploy
           context: aws_context
-          family: "${MY_APP_PREFIX}-go-service"
+          family: "${MY_APP_PREFIX}-go-task"
           cluster-name: "${MY_APP_PREFIX}-cluster"
           service-name: '${MY_APP_PREFIX}-go-service'
           container-image-name-updates: "container=${MY_APP_PREFIX}-go-api,tag=${CIRCLE_SHA1}"
