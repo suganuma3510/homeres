@@ -26,11 +26,9 @@ const (
 
 // GetShopList : ぐるなびAPIから飲食店情報を取得
 func (sr shopRepository) GetShopList(ctx context.Context, param url.Values) (*model.Shop, error) {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
-	// .envファイル読み込み
+
+	// ぐるなびAPIキー読み込み
+	godotenv.Load()
 	keyid := os.Getenv("GURUNAVI_API_KEY")
 
 	// URLパース

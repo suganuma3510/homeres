@@ -44,6 +44,7 @@ workflows:
               only: master
       - aws-ecs/deploy-service-update:
           name: nuxt-deploy
+          context: aws_context
           family: "${MY_APP_PREFIX}-nuxt-task"
           cluster-name: "${MY_APP_PREFIX}-cluster"
           service-name: '${MY_APP_PREFIX}-nuxt-service'
@@ -69,7 +70,8 @@ workflows:
               only: master
       - aws-ecs/deploy-service-update:
           name: go-deploy
-          family: "${MY_APP_PREFIX}-go-service"
+          context: aws_context
+          family: "${MY_APP_PREFIX}-go-task"
           cluster-name: "${MY_APP_PREFIX}-cluster"
           service-name: '${MY_APP_PREFIX}-go-service'
           container-image-name-updates: "container=${MY_APP_PREFIX}-go-api,tag=${CIRCLE_SHA1}"
