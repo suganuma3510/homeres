@@ -77,7 +77,7 @@ export default {
 
 @media (min-width: 0px) and (max-width: 600px) {
   .category-img {
-    max-height: 15vh;
+    max-height: 14vh;
   }
 }
 </style>
