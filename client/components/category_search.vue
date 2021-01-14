@@ -32,7 +32,7 @@
 import { mapGetters, mapMutations } from "vuex";
 
 export default {
-  props: ["category", "takeout", "deliverly"],
+  props: ["category", "area", "takeout", "deliverly"],
   methods: {
     ...mapMutations({
       setShops: "shops/setShops",
@@ -41,10 +41,13 @@ export default {
       this.$refs.form.validate();
     },
     getShops() {
+      if (this.$props.area == null) {
+        this.$props.area = "";
+      }
       this.$axios
         .$get("/api/shops/search", {
           params: {
-            freeword: this.$props.category,
+            freeword: this.$props.category + " " + this.$props.area,
             deliverly: this.$props.deliverly,
             takeout: this.$props.takeout,
           },
@@ -75,9 +78,9 @@ export default {
   width: 100%;
 }
 
-@media (min-width: 0px) and (max-width: 600px) {
+@media (min-width: 0px) and (max-width: 450px) {
   .category-img {
-    max-height: 14vh;
+    max-height: 12.5vh;
   }
 }
 </style>

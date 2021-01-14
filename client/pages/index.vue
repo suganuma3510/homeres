@@ -1,7 +1,7 @@
 <template>
   <div id="index-area">
     <v-row class="top_contents fill-height" justify="center" align="center">
-      <v-col cols="12" sm="10" md="6" class="coll-left">
+      <v-col cols="12" sm="12" md="6" class="coll-left">
         <h1>HOME<br />RES</h1>
         <h2>Turn your house into a restaurant</h2>
       </v-col>
@@ -67,5 +67,14 @@ export default {
     rgba(0, 0, 255, 0.25) 5px,
     rgba(0, 0, 255, 0.25) 10px
   );
+}
+
+@media (min-width: 0px) and (max-width: 450px) {
+  .coll-left h1 {
+    font-size: 30vw;
+  }
+  .coll-left h2 {
+    font-size: 10vw;
+  }
 }
 </style>
