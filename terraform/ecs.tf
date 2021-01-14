@@ -1,5 +1,6 @@
 variable "ecr_nuxt_image" {}
 variable "ecr_go_image" {}
+variable "gurunavi_api_key" {}
 
 resource "aws_ecs_cluster" "ecs-cluster" {
   name = "${var.name}-cluster"
@@ -25,6 +26,7 @@ data "template_file" "go-container-definitions" {
   vars = {
     ECR_ARN   = var.ecr_go_image
     log_group = aws_cloudwatch_log_group.cloudwatch.name
+    gurunavi_api_key=var.gurunavi_api_key
   }
 }
 
