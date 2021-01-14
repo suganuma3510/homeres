@@ -12,7 +12,8 @@
           outlined
           clearable
           prepend-inner-icon="mdi-food"
-          class="form-area form-text"
+          style="display: inline-block"
+          class="form-text"
         >
           <template v-slot:append-outer> </template>
         </v-text-field>
@@ -25,10 +26,11 @@
           outlined
           clearable
           prepend-inner-icon="mdi-map-marker"
-          class="form-area form-text"
+          style="display: inline-block"
+          class="form-text"
         >
         </v-text-field>
-        <div class="form-area form-checkbox">
+        <div class="form-checkbox" style="display: inline-block">
           <v-checkbox
             v-model="deliverly"
             true-value="1"
@@ -150,9 +152,6 @@ export default {
   height: 100vh;
   padding: 3vw 0 0;
 }
-.form-area {
-  display: inline-block;
-}
 .form-text {
   width: 20vw;
 }
@@ -177,7 +176,7 @@ export default {
   }
   .col-area {
     padding: 0 5px 0;
-    margin: 0 0 0;
+    margin: 0;
   }
   .form-text {
     min-width: 500px;
