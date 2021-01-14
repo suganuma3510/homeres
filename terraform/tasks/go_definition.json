@@ -18,6 +18,12 @@
         "awslogs-stream-prefix": "go"
       }
     },
-    "entryPoint": [ "/go/bin/app" ]
+    "entryPoint": [ "/go/bin/app" ],
+    "environment": [
+      {
+        "name": "GURUNAVI_API_KEY",
+        "value": "${gurunavi_api_key}"
+      }
+    ]
   }
 ]
