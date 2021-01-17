@@ -17,7 +17,7 @@ jobs:
       - checkout
       - run:
           name: docker-compose build
-          command: docker-compose build client server
+          command: docker-compose build
       - run:
           name: client test
           command: docker-compose run --rm client yarn test
