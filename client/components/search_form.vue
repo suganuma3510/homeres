@@ -51,7 +51,7 @@
         <v-btn
           @click="getShops"
           outlined
-          color="#EBCD51"
+          color="primary"
           x-large
           class="form-area form-btn"
         >

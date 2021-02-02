@@ -1,7 +1,7 @@
 <template>
   <div id="index-area">
     <v-row class="top_contents fill-height" justify="center" align="center">
-      <v-col cols="12" sm="12" md="6" class="coll-left">
+      <v-col cols="12" sm="12" md="6" class="coll-left white--text">
         <h1>HOME<br />RES</h1>
         <h2>Turn your house into a restaurant</h2>
       </v-col>
@@ -9,7 +9,7 @@
       <v-col cols="12" sm="10" md="6" class="coll-right repeating-gradient">
         <div class="text-center">
           <Logo />
-          <p class="font-weight-bold">
+          <p class="font-weight-bold white--text">
             本サービスは、デリバリーやテイクアウトを行っている飲食店のみを探し出し、<br />
             その飲食店のジャンルや、位置、営業情報などを提供するサービスです。<br />
           </p>
