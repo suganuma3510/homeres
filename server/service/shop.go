@@ -2,9 +2,11 @@ package service
 
 import (
 	"context"
+	"net/url"
+
 	"github.com/suganuma3510/homeres/domain/model"
 	"github.com/suganuma3510/homeres/domain/repository"
-	"net/url"
+
 )
 
 // ShopService : ShopにおけるServiceのインターフェース

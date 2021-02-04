@@ -1,9 +1,10 @@
 package controller
 
 import (
+	"net/http"
+
 	"github.com/labstack/echo"
 	"github.com/suganuma3510/homeres/service"
-	"net/http"
 )
 
 // ShopController : ShopにおけるControllerのインターフェース
