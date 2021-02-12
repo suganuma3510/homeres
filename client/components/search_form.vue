@@ -49,19 +49,27 @@
           ></v-checkbox>
         </div>
         <v-btn
-          v-on:click="getShops"
           @click="getShops"
           outlined
-          color="#EBCD51"
+          color="primary"
           x-large
           class="form-area form-btn"
         >
           <v-icon left dark>mdi-magnify mdi-24px</v-icon>検索
         </v-btn>
       </v-col>
-      <v-col v-for="c in category" :key="c" class="col-area" cols="6" sm="3">
+      <v-col
+        v-for="c in category"
+        :key="c"
+        class="col-area"
+        cols="6"
+        lg="3"
+        sm="3"
+        xs="6"
+      >
         <CategorySearch
           v-bind:category="c"
+          v-bind:area="area"
           v-bind:deliverly="deliverly"
           v-bind:takeout="takeout"
         />
@@ -123,10 +131,16 @@ export default {
       this.$refs.form.validate();
     },
     getShops() {
+      if (this.freeword == null) {
+        this.freeword = "";
+      }
+      if (this.area == null) {
+        this.area = "";
+      }
       this.$axios
         .$get("/api/shops/search", {
           params: {
-            freeword: this.freeword + this.area,
+            freeword: this.freeword + " " + this.area,
             deliverly: this.deliverly,
             takeout: this.takeout,
           },
@@ -166,7 +180,7 @@ export default {
   margin-bottom: -10px;
 }
 
-@media (min-width: 0px) and (max-width: 600px) {
+@media (min-width: 0px) and (max-width: 450px) {
   #form-heading {
     padding: 12px;
     margin: 0;
@@ -179,7 +193,7 @@ export default {
     margin: 0;
   }
   .form-text {
-    min-width: 500px;
+    min-width: 300px;
   }
 }
 </style>

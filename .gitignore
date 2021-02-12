@@ -1,3 +1,5 @@
+db/data
+
 .terraform
 *tfstate*
 *.tfvars

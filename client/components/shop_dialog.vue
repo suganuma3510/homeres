@@ -7,7 +7,7 @@
       transition="dialog-bottom-transition"
     >
       <v-card>
-        <v-toolbar dark color="#F9A825">
+        <v-toolbar dark color="primary">
           <v-toolbar-title
             ><h3>{{ shop.name }}</h3></v-toolbar-title
           >

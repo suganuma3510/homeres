@@ -16,9 +16,6 @@ RUN CGO_ENABLED=0 \
 
 FROM alpine:latest
 
-ARG gurunavi_api_key
-ENV GURUNAVI_API_KEY=$gurunavi_api_key
-
 RUN apk --no-cache add ca-certificates
 
 COPY --from=builder /go/bin/app /go/bin/app
