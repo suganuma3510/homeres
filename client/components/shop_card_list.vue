@@ -48,7 +48,7 @@
 
         <v-divider class="mx-4"></v-divider>
         <v-card-actions>
-          <v-btn color="#F9A825" text> 詳細 </v-btn>
+          <v-btn color="primary" text> 詳細 </v-btn>
         </v-card-actions>
       </v-card>
       <ShopDialog :dialog="dialog" @onDialog="onDialog(false)" v-if="dialog" />

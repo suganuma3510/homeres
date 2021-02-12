@@ -72,14 +72,15 @@ export default {
       dark: true,
       themes: {
         light: {
-          primary: "#D96738",
+          primary: "#4E342E",
           secondary: "#EBCD51",
           accent: "#48B0C7",
           error: "#ffeb3b",
           warning: "#ffc107",
           info: "#ff5722",
           success: "#795548",
-          background: "#E8C9C7",
+          background: "#FFF9C4",
+          barcolor: "#4E342E",
         },
         dark: {
           primary: "#EBCD51",
@@ -90,6 +91,7 @@ export default {
           info: "#ff5722",
           success: "#795548",
           background: "#5D4037",
+          barcolor: "#ffffff",
         }
       }
     }
