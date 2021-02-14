@@ -4,6 +4,7 @@
       :src="`images/category_list/${category}_img.jpg`"
       :lazy-src="`images/category_list/${category}_img.jpg`"
       aspect-ratio="1"
+      @click="getShops"
       class="category-img"
     >
       <a @click="getShops">
@@ -11,7 +12,6 @@
           <div
             v-if="hover"
             class="d-flex transition-fast-in-fast-out v-card--reveal white--text"
-            style="height: 100%"
           >
             {{ category }}
           </div>
@@ -69,7 +69,8 @@ export default {
   margin: -50px 0 -30px;
 }
 .v-card--reveal {
-  font-size: 3vw;
+  height: 100%;
+  font-size: 1.2em;
   align-items: center;
   bottom: 0;
   justify-content: center;
