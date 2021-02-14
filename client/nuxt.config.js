@@ -30,7 +30,8 @@ export default {
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
-    'plugins/axios'
+    'plugins/axios',
+    'plugins/infiniteloading'
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -54,15 +55,17 @@ export default {
     proxy: true
   },
   proxy: {
-    '/api/': process.env.NODE_ENV !== 'production' ?
-      {
-        target: 'http://server:3000/',
-        pathRewrite: { '^/api/': '/' }
-      } :
-      {
-        target: 'http://www.homeres.info:3000/',
-        pathRewrite: { '^/api/': '/' }
+    '/api/': process.env.NODE_ENV !== 'production' ? {
+      target: 'http://server:3000/',
+      pathRewrite: {
+        '^/api/': '/'
       }
+    } : {
+      target: 'http://www.homeres.info:3000/',
+      pathRewrite: {
+        '^/api/': '/'
+      }
+    }
   },
 
   // Vuetify module configuration (https://go.nuxtjs.dev/config-vuetify)
