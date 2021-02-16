@@ -81,6 +81,7 @@ export default {
         })
         .catch((error) => {
           console.log("response error", error);
+          this.snackbar = true;
         });
     },
   },

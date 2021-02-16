@@ -5,8 +5,8 @@
       <v-col cols="12" class="col-area text-center">
         <v-text-field
           v-model="freeword"
-          :counter="max"
-          :rules="rules"
+          counter
+          maxlength="25"
           label="店名・ジャンル・目的"
           placeholder="例：イタリアン、居酒屋"
           outlined
@@ -19,8 +19,8 @@
         </v-text-field>
         <v-text-field
           v-model="area"
-          :counter="max"
-          :rules="rules"
+          counter
+          maxlength="25"
           label="エリア・駅"
           placeholder="例：渋谷、新宿駅"
           outlined
@@ -90,8 +90,6 @@ import { mapGetters, mapMutations } from "vuex";
 export default {
   data: () => ({
     snackbar: false,
-    match: "Foobar",
-    max: 30,
     freeword: "",
     area: "",
     deliverly: "1",
@@ -118,22 +116,6 @@ export default {
       shops: "shops/shops",
       params: "shops/params",
     }),
-    rules() {
-      const rules = [];
-      if (this.max) {
-        const rule = (v) =>
-          (v || "").length <= this.max ||
-          `${this.max} 文字以下で入力してください`;
-
-        rules.push(rule);
-      }
-      return rules;
-    },
-  },
-
-  watch: {
-    match: "validateField",
-    max: "validateField",
   },
 
   methods: {
@@ -143,9 +125,6 @@ export default {
       setShops: "shops/setShops",
       setParams: "shops/setParams",
     }),
-    validateField() {
-      this.$refs.form.validate();
-    },
     getShops() {
       if (this.freeword == null) {
         this.freeword = "";
@@ -172,6 +151,7 @@ export default {
         })
         .catch((error) => {
           console.log("response error", error);
+          this.snackbar = true;
         });
     },
   },

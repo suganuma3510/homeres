@@ -65,10 +65,9 @@
         spinner="spiral"
         direction="bottom"
       >
-        <h3 slot="no-more">すべてのページを表示しました</h3>
         <!--これ以上表示するデータがない時に表示されるメッセージ-->
+        <h3 slot="no-more">すべてのページを表示しました</h3>
         <h3 slot="no-results">すべてのページを表示しました</h3>
-        <!--検索結果がない時に表示されるメッセージ-->
       </infinite-loading>
     </div>
   </div>
@@ -114,10 +113,8 @@ export default {
     // スクロール時に、次ページに表示するデータを取得する処理
     infiniteHandler($state) {
       if (this.shops.length >= this.shopsTotalCount) {
-        // 表示するデータが無くなったら$state.complete()を呼ぶ
         $state.complete();
       } else {
-        // 表示するデータがある場合、時ページのデータを読み込む
         this.getItems($state, this.offsetPage + 1);
       }
     },
