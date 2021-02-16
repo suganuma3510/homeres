@@ -75,14 +75,21 @@
         />
       </v-col>
     </v-row>
+    <ShopCardList />
+    <v-snackbar v-model="snackbar">
+      該当する飲食店は、ありませんでした。再度検索してみてください。
+    </v-snackbar>
   </v-container>
 </template>
 <script>
 import CategorySearch from "~/components/category_search.vue";
+import ShopCardList from "~/components/shop_card_list.vue";
+
 import { mapGetters, mapMutations } from "vuex";
 
 export default {
   data: () => ({
+    snackbar: false,
     match: "Foobar",
     max: 30,
     freeword: "",
@@ -106,7 +113,11 @@ export default {
   },
 
   computed: {
-    ...mapGetters({ shops: "shops/shops" }),
+    ...mapGetters({
+      shopsTotalCount: "shops/shopsTotalCount",
+      shops: "shops/shops",
+      params: "shops/params",
+    }),
     rules() {
       const rules = [];
       if (this.max) {
@@ -126,7 +137,12 @@ export default {
   },
 
   methods: {
-    ...mapMutations({ setShops: "shops/setShops" }),
+    ...mapMutations({
+      setIsSearched: "shops/setIsSearched",
+      setShopsTotalCount: "shops/setShopsTotalCount",
+      setShops: "shops/setShops",
+      setParams: "shops/setParams",
+    }),
     validateField() {
       this.$refs.form.validate();
     },
@@ -137,17 +153,22 @@ export default {
       if (this.area == null) {
         this.area = "";
       }
+      this.setParams({
+        freeword: this.freeword + " " + this.area,
+        deliverly: this.deliverly,
+        takeout: this.takeout,
+      });
       this.$axios
-        .$get("/api/shops/search", {
-          params: {
-            freeword: this.freeword + " " + this.area,
-            deliverly: this.deliverly,
-            takeout: this.takeout,
-          },
-        })
+        .$get("/api/shops/search", { params: this.params })
         .then((response) => {
           console.log("response data", response);
-          this.setShops(response.rest);
+          if (response.total_hit_count != 0) {
+            this.setShops(response.rest);
+            this.setShopsTotalCount(response.total_hit_count);
+          } else {
+            this.snackbar = true;
+          }
+          this.setIsSearched();
         })
         .catch((error) => {
           console.log("response error", error);
