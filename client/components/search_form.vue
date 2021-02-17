@@ -84,7 +84,6 @@
 <script>
 import CategorySearch from "~/components/category_search.vue";
 import ShopCardList from "~/components/shop_card_list.vue";
-
 import { mapGetters, mapMutations } from "vuex";
 
 export default {
@@ -108,6 +107,7 @@ export default {
 
   components: {
     CategorySearch,
+    ShopCardList,
   },
 
   computed: {
