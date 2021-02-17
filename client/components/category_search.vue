@@ -28,6 +28,17 @@
         </template>
       </v-img>
     </v-hover>
+    <v-row justify="center">
+      <v-col cols="6">
+        <v-progress-linear
+          :active="loading"
+          :indeterminate="loading"
+          rounded
+          color="primary"
+        ></v-progress-linear>
+      </v-col>
+    </v-row>
+
     <v-snackbar v-model="snackbar">
       該当する飲食店は、ありませんでした。再度検索してみてください。
     </v-snackbar>
@@ -40,6 +51,7 @@ export default {
   props: ["category", "area", "takeout", "deliverly"],
   data: () => ({
     snackbar: false,
+    loading: false,
   }),
   computed: {
     ...mapGetters({
@@ -59,6 +71,7 @@ export default {
       this.$refs.form.validate();
     },
     getShops() {
+      this.loading = true;
       if (this.$props.area == null) {
         this.$props.area = "";
       }
@@ -78,10 +91,12 @@ export default {
             this.snackbar = true;
           }
           this.setIsSearched();
+          this.loading = false;
         })
         .catch((error) => {
           console.log("response error", error);
           this.snackbar = true;
+          this.loading = false;
         });
     },
   },
