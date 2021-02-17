@@ -103,6 +103,11 @@ export default {
   width: 100%;
 }
 
+@media (min-width: 0px) and (max-width: 650px) {
+  .category-img {
+    max-height: 15vh;
+  }
+}
 @media (min-width: 0px) and (max-width: 450px) {
   .category-img {
     max-height: 12.5vh;
