@@ -62,7 +62,7 @@
       <!--下スクロールした時に、次のページのデータを取得する無限スクロールコンポーネント-->
       <infinite-loading
         @infinite="infiniteHandler"
-        spinner="spiral"
+        spinner="waveDots"
         direction="bottom"
       >
         <!--これ以上表示するデータがない時に表示されるメッセージ-->
@@ -75,11 +75,12 @@
 <script>
 import ShopDialog from "~/components/shop_dialog.vue";
 import { mapGetters, mapMutations } from "vuex";
+
 export default {
   data() {
     return {
       dialog: false,
-      offsetPage: 1, // 開始ページ番号
+      offsetPage: 11, // 開始ページ番号
     };
   },
   name: "InfiniteScroll",
@@ -112,39 +113,38 @@ export default {
 
     // スクロール時に、次ページに表示するデータを取得する処理
     infiniteHandler($state) {
-      if (this.shops.length >= this.shopsTotalCount) {
+      if (this.offsetPage >= this.shopsTotalCount) {
         $state.complete();
       } else {
-        this.getItems($state, this.offsetPage + 1);
+        this.getItems($state, this.offsetPage);
       }
     },
 
     // ページに表示するデータを検索する処理
     getItems($state, Page) {
-      setTimeout(() => {
-        // ぐるなびAPIから追加の飲食店情報を取得
-        this.$axios
-          .$get("/api/shops/search", {
-            params: {
-              offset: Page,
-              freeword: this.params.freeword,
-              deliverly: this.params.deliverly,
-              takeout: this.params.takeout,
-            },
-          })
-          .then((response) => {
-            console.log("response error", response);
-            this.setShops(this.shops.concat(response.rest));
-          })
-          .catch((error) => {
-            console.log("response error", error);
-          });
+      // ぐるなびAPIから追加の飲食店情報を取得
+      alert(this.offsetPage);
+      this.$axios
+        .$get("/api/shops/search", {
+          params: {
+            offset: Page,
+            freeword: this.params.freeword,
+            deliverly: this.params.deliverly,
+            takeout: this.params.takeout,
+          },
+        })
+        .then((response) => {
+          console.log("response error", response);
+          this.setShops(this.shops.concat(response.rest));
+          this.offsetPage += 10;
 
-        this.offsetPage = page;
-
-        // $state.loaded()でデータの読込完了を通知する
-        if ($state) $state.loaded();
-      }, 1000);
+          // $state.loaded()でデータの読込完了を通知する
+          if ($state) $state.loaded();
+        })
+        .catch((error) => {
+          console.log("response error", error);
+          $state.complete();
+        });
     },
   },
 };
