@@ -4,14 +4,15 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/suganuma3510/homeres/domain/model"
-	"github.com/suganuma3510/homeres/domain/repository"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"net/url"
 	"os"
+
 	"github.com/joho/godotenv"
+	"github.com/suganuma3510/homeres/domain/model"
+	"github.com/suganuma3510/homeres/domain/repository"
 )
 
 type shopRepository struct{}

@@ -5,8 +5,8 @@
       <v-col cols="12" class="col-area text-center">
         <v-text-field
           v-model="freeword"
-          :counter="max"
-          :rules="rules"
+          counter
+          maxlength="25"
           label="店名・ジャンル・目的"
           placeholder="例：イタリアン、居酒屋"
           outlined
@@ -19,8 +19,8 @@
         </v-text-field>
         <v-text-field
           v-model="area"
-          :counter="max"
-          :rules="rules"
+          counter
+          maxlength="25"
           label="エリア・駅"
           placeholder="例：渋谷、新宿駅"
           outlined
@@ -75,16 +75,20 @@
         />
       </v-col>
     </v-row>
+    <ShopCardList />
+    <v-snackbar v-model="snackbar">
+      該当する飲食店は、ありませんでした。再度検索してみてください。
+    </v-snackbar>
   </v-container>
 </template>
 <script>
 import CategorySearch from "~/components/category_search.vue";
+import ShopCardList from "~/components/shop_card_list.vue";
 import { mapGetters, mapMutations } from "vuex";
 
 export default {
   data: () => ({
-    match: "Foobar",
-    max: 30,
+    snackbar: false,
     freeword: "",
     area: "",
     deliverly: "1",
@@ -103,33 +107,24 @@ export default {
 
   components: {
     CategorySearch,
+    ShopCardList,
   },
 
   computed: {
-    ...mapGetters({ shops: "shops/shops" }),
-    rules() {
-      const rules = [];
-      if (this.max) {
-        const rule = (v) =>
-          (v || "").length <= this.max ||
-          `${this.max} 文字以下で入力してください`;
-
-        rules.push(rule);
-      }
-      return rules;
-    },
-  },
-
-  watch: {
-    match: "validateField",
-    max: "validateField",
+    ...mapGetters({
+      shopsTotalCount: "shops/shopsTotalCount",
+      shops: "shops/shops",
+      params: "shops/params",
+    }),
   },
 
   methods: {
-    ...mapMutations({ setShops: "shops/setShops" }),
-    validateField() {
-      this.$refs.form.validate();
-    },
+    ...mapMutations({
+      setIsSearched: "shops/setIsSearched",
+      setShopsTotalCount: "shops/setShopsTotalCount",
+      setShops: "shops/setShops",
+      setParams: "shops/setParams",
+    }),
     getShops() {
       if (this.freeword == null) {
         this.freeword = "";
@@ -137,20 +132,26 @@ export default {
       if (this.area == null) {
         this.area = "";
       }
+      this.setParams({
+        freeword: this.freeword + " " + this.area,
+        deliverly: this.deliverly,
+        takeout: this.takeout,
+      });
       this.$axios
-        .$get("/api/shops/search", {
-          params: {
-            freeword: this.freeword + " " + this.area,
-            deliverly: this.deliverly,
-            takeout: this.takeout,
-          },
-        })
+        .$get("/api/shops/search", { params: this.params })
         .then((response) => {
           console.log("response data", response);
-          this.setShops(response.rest);
+          if (response.total_hit_count != 0) {
+            this.setShops(response.rest);
+            this.setShopsTotalCount(response.total_hit_count);
+          } else {
+            this.snackbar = true;
+          }
+          this.setIsSearched();
         })
         .catch((error) => {
           console.log("response error", error);
+          this.snackbar = true;
         });
     },
   },
