@@ -1,6 +1,12 @@
 <template>
   <v-container>
     <h3 id="form-heading">キーワード・ジャンル から探す</h3>
+    <v-progress-linear
+      :active="loading"
+      :indeterminate="loading"
+      rounded
+      color="primary"
+    ></v-progress-linear>
     <v-row class="row-area" justify="center">
       <v-col cols="12" class="col-area text-center">
         <v-text-field
@@ -73,14 +79,6 @@
           v-bind:deliverly="deliverly"
           v-bind:takeout="takeout"
         />
-      </v-col>
-      <v-col cols="6">
-        <v-progress-linear
-          :active="loading"
-          :indeterminate="loading"
-          rounded
-          color="primary"
-        ></v-progress-linear>
       </v-col>
     </v-row>
 
