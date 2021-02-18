@@ -30,7 +30,8 @@ export default {
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
-    'plugins/axios'
+    'plugins/axios',
+    'plugins/infiniteloading'
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -54,15 +55,17 @@ export default {
     proxy: true
   },
   proxy: {
-    '/api/': process.env.NODE_ENV !== 'production' ?
-      {
-        target: 'http://server:3000/',
-        pathRewrite: { '^/api/': '/' }
-      } :
-      {
-        target: 'http://www.homeres.info:3000/',
-        pathRewrite: { '^/api/': '/' }
+    '/api/': process.env.NODE_ENV !== 'production' ? {
+      target: 'http://server:3000/',
+      pathRewrite: {
+        '^/api/': '/'
       }
+    } : {
+      target: 'http://www.homeres.info:3000/',
+      pathRewrite: {
+        '^/api/': '/'
+      }
+    }
   },
 
   // Vuetify module configuration (https://go.nuxtjs.dev/config-vuetify)
@@ -72,14 +75,15 @@ export default {
       dark: true,
       themes: {
         light: {
-          primary: "#D96738",
+          primary: "#4E342E",
           secondary: "#EBCD51",
           accent: "#48B0C7",
           error: "#ffeb3b",
           warning: "#ffc107",
           info: "#ff5722",
           success: "#795548",
-          background: "#E8C9C7",
+          background: "#FFF9C4",
+          barcolor: "#4E342E",
         },
         dark: {
           primary: "#EBCD51",
@@ -90,6 +94,7 @@ export default {
           info: "#ff5722",
           success: "#795548",
           background: "#5D4037",
+          barcolor: "#ffffff",
         }
       }
     }

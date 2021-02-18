@@ -1,9 +1,9 @@
 <template>
   <div id="index-area">
-    <v-row class="top_contents fill-height" justify="center" align="center">
+    <v-row class="top_contents fill-height white--text" justify="center" align="center">
       <v-col cols="12" sm="12" md="6" class="coll-left">
         <h1>HOME<br />RES</h1>
-        <h2>Turn your house into a restaurant</h2>
+        <h2>Turn your home into a restaurant</h2>
       </v-col>
 
       <v-col cols="12" sm="10" md="6" class="coll-right repeating-gradient">
@@ -20,44 +20,41 @@
       </v-col>
     </v-row>
     <SearchForm />
-    <ShopCardList />
   </div>
 </template>
 
 <script>
 import Logo from "~/components/Logo.vue";
 import SearchForm from "~/components/search_form.vue";
-import ShopCardList from "~/components/shop_card_list.vue";
 
 export default {
   components: {
     Logo,
+    SearchForm,
   },
 };
 </script>
 <style>
 .top_contents {
   height: 100vh;
+  width: 103%;
   background-image: url(../static/images/top_page_image.jpg);
+  background-size: cover;
 }
 .coll-left {
   margin-top: 5vh;
 }
 .coll-left h1 {
   font-size: 15vw;
-  font-weight: 100;
+  font-weight: 400;
   line-height: 0.7em;
-  font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN",
-    "Hiragino Sans", Meiryo, sans-serif;
 }
 .coll-left h2 {
   margin-top: 20px;
   margin-left: 0.2em;
   font-size: 5vw;
-  font-weight: 100;
+  font-weight: 400;
   line-height: 0.8em;
-  font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN",
-    "Hiragino Sans", Meiryo, sans-serif;
 }
 .repeating-gradient {
   background-image: repeating-linear-gradient(
