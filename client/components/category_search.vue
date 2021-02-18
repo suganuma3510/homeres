@@ -59,11 +59,14 @@ export default {
       this.$refs.form.validate();
     },
     getShops() {
+      var area;
       if (this.$props.area == null) {
-        this.$props.area = "";
+        area = "";
+      } else {
+        area = this.$props.area.replace(/\s+/g, ",");
       }
       this.setParams({
-        freeword: this.$props.category + " " + this.$props.area,
+        freeword: this.$props.category + "," + area,
         deliverly: this.$props.deliverly,
         takeout: this.$props.takeout,
       });
