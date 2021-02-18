@@ -74,14 +74,6 @@
           v-bind:takeout="takeout"
         />
       </v-col>
-      <v-col cols="6">
-        <v-progress-linear
-          :active="loading"
-          :indeterminate="loading"
-          rounded
-          color="primary"
-        ></v-progress-linear>
-      </v-col>
     </v-row>
 
     <ShopCardList />
@@ -98,7 +90,6 @@ import { mapGetters, mapMutations } from "vuex";
 export default {
   data: () => ({
     snackbar: false,
-    loading: false,
     freeword: "",
     area: "",
     deliverly: "1",
@@ -136,7 +127,6 @@ export default {
       setParams: "shops/setParams",
     }),
     getShops() {
-      this.loading = true;
       if (this.freeword == null) {
         this.freeword = "";
       }
@@ -159,12 +149,10 @@ export default {
             this.snackbar = true;
           }
           this.setIsSearched();
-          this.loading = false;
         })
         .catch((error) => {
           console.log("response error", error);
           this.snackbar = true;
-          this.loading = false;
         });
     },
   },
