@@ -134,7 +134,7 @@ export default {
         this.area = "";
       }
       this.setParams({
-        freeword: this.freeword + " " + this.area,
+        freeword: this.freeword.replace(/\s+/g, ",") + "," + this.area.replace(/\s+/g, ","),
         deliverly: this.deliverly,
         takeout: this.takeout,
       });
