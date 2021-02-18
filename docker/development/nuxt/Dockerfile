@@ -11,7 +11,6 @@ ADD ./client /app
 
 RUN apk update && \
     apk upgrade && \
-    npm install -g n && \
     yarn install && \
     rm -rf /var/cache/apk/*
 
