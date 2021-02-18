@@ -123,7 +123,6 @@ export default {
     // ページに表示するデータを検索する処理
     getItems($state, Page) {
       // ぐるなびAPIから追加の飲食店情報を取得
-      alert(this.offsetPage);
       this.$axios
         .$get("/api/shops/search", {
           params: {
