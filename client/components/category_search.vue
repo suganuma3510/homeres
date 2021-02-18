@@ -1,63 +1,102 @@
 <template>
-  <v-hover v-slot="{ hover }">
-    <v-img
-      :src="`images/category_list/${category}_img.jpg`"
-      :lazy-src="`images/category_list/${category}_img.jpg`"
-      aspect-ratio="1"
-      class="category-img"
-    >
-      <a @click="getShops">
-        <v-expand-transition>
-          <div
-            v-if="hover"
-            class="d-flex transition-fast-in-fast-out v-card--reveal white--text"
-            style="height: 100%"
-          >
-            {{ category }}
-          </div>
-        </v-expand-transition>
-      </a>
-      <template v-slot:placeholder>
-        <v-row class="fill-height ma-0" align="center" justify="center">
-          <v-progress-circular
-            indeterminate
-            color="grey lighten-5"
-          ></v-progress-circular>
-        </v-row>
-      </template>
-    </v-img>
-  </v-hover>
+  <div id="category-search-area">
+    <v-hover v-slot="{ hover }">
+      <v-img
+        :src="`images/category_list/${category}_img.jpg`"
+        :lazy-src="`images/category_list/${category}_img.jpg`"
+        aspect-ratio="1"
+        @click="getShops"
+        class="category-img"
+      >
+        <a @click="getShops">
+          <v-expand-transition>
+            <div
+              v-if="hover"
+              class="d-flex transition-fast-in-fast-out v-card--reveal white--text"
+            >
+              {{ category }}
+            </div>
+          </v-expand-transition>
+        </a>
+        <template v-slot:placeholder>
+          <v-row class="fill-height ma-0" align="center" justify="center">
+            <v-progress-circular
+              indeterminate
+              color="grey lighten-5"
+            ></v-progress-circular>
+          </v-row>
+        </template>
+      </v-img>
+    </v-hover>
+    <v-row justify="center">
+      <v-col cols="6">
+        <v-progress-linear
+          :active="loading"
+          :indeterminate="loading"
+          rounded
+          color="primary"
+        ></v-progress-linear>
+      </v-col>
+    </v-row>
+
+    <v-snackbar v-model="snackbar">
+      該当する飲食店は、ありませんでした。再度検索してみてください。
+    </v-snackbar>
+  </div>
 </template>
 <script>
 import { mapGetters, mapMutations } from "vuex";
 
 export default {
   props: ["category", "area", "takeout", "deliverly"],
+  data: () => ({
+    snackbar: false,
+    loading: false,
+  }),
+  computed: {
+    ...mapGetters({
+      shopsTotalCount: "shops/shopsTotalCount",
+      shops: "shops/shops",
+      params: "shops/params",
+    }),
+  },
   methods: {
     ...mapMutations({
+      setIsSearched: "shops/setIsSearched",
+      setShopsTotalCount: "shops/setShopsTotalCount",
       setShops: "shops/setShops",
+      setParams: "shops/setParams",
     }),
     validateField() {
       this.$refs.form.validate();
     },
     getShops() {
+      this.loading = true;
       if (this.$props.area == null) {
         this.$props.area = "";
       }
+      this.setParams({
+        freeword: this.$props.category + " " + this.$props.area,
+        deliverly: this.$props.deliverly,
+        takeout: this.$props.takeout,
+      });
       this.$axios
-        .$get("/api/shops/search", {
-          params: {
-            freeword: this.$props.category + " " + this.$props.area,
-            deliverly: this.$props.deliverly,
-            takeout: this.$props.takeout,
-          },
-        })
+        .$get("/api/shops/search", { params: this.params })
         .then((response) => {
           console.log("response data", response);
-          this.setShops(response.rest);
+          if (response.total_hit_count != 0) {
+            this.setShops(response.rest);
+            this.setShopsTotalCount(response.total_hit_count);
+          } else {
+            this.snackbar = true;
+          }
+          this.setIsSearched();
+          this.loading = false;
         })
         .catch((error) => {
           console.log("response error", error);
+          this.snackbar = true;
+          this.loading = false;
         });
     },
   },
@@ -69,7 +108,8 @@ export default {
   margin: -50px 0 -30px;
 }
 .v-card--reveal {
-  font-size: 3vw;
+  height: 100%;
+  font-size: 1.2em;
   align-items: center;
   bottom: 0;
   justify-content: center;
@@ -78,6 +118,11 @@ export default {
   width: 100%;
 }
 
+@media (min-width: 0px) and (max-width: 650px) {
+  .category-img {
+    max-height: 15vh;
+  }
+}
 @media (min-width: 0px) and (max-width: 450px) {
   .category-img {
     max-height: 12.5vh;

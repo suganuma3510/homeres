@@ -1,7 +1,6 @@
 import Vuex from 'vuex'
-import { mount, createLocalVue } from '@vue/test-utils'
+import { shallowMount, createLocalVue } from '@vue/test-utils'
 import SearchForm from "@/components/search_form.vue";
-import CategorySearch from "@/components/category_search.vue";
 
 const localVue = createLocalVue()
 localVue.use(Vuex)
@@ -9,7 +8,7 @@ localVue.use(Vuex)
 describe('components/search_form.vue', () => {
   let wrapper
   beforeEach(() => {
-    wrapper = mount(SearchForm, {
+    wrapper = shallowMount(SearchForm, {
       localVue
     })
   })
@@ -17,10 +16,6 @@ describe('components/search_form.vue', () => {
   describe('template', () => {
     test('コンポーネントが表示されるか', () => {
       expect(wrapper.exists()).toBe(true)
-    })
-
-    test('子コンポーネントが表示されるか', () => {
-      expect(wrapper.find(".category-img").is(CategorySearch)).toBe(true)
     })
   })
 })

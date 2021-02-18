@@ -2,8 +2,9 @@ package repository
 
 import (
 	"context"
-	"github.com/suganuma3510/homeres/domain/model"
 	"net/url"
+
+	"github.com/suganuma3510/homeres/domain/model"
 )
 
 type ShopRepository interface {
