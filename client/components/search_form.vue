@@ -1,86 +1,88 @@
 <template>
-  <v-container>
+  <div id="search-area">
     <h3 id="form-heading">キーワード・ジャンル から探す</h3>
-    <v-row class="row-area" justify="center">
-      <v-col cols="12" class="col-area text-center">
-        <v-text-field
-          v-model="freeword"
-          counter
-          maxlength="25"
-          label="店名・ジャンル・目的"
-          placeholder="例：イタリアン、居酒屋"
-          outlined
-          clearable
-          prepend-inner-icon="mdi-food"
-          style="display: inline-block"
-          class="form-text"
+    <v-container>
+      <v-row class="row-area" justify="center">
+        <v-col cols="12" class="col-area text-center">
+          <v-text-field
+            v-model="freeword"
+            counter
+            maxlength="25"
+            label="店名・ジャンル・目的"
+            placeholder="例：イタリアン、居酒屋"
+            outlined
+            clearable
+            prepend-inner-icon="mdi-food"
+            style="display: inline-block"
+            class="form-text"
+          >
+            <template v-slot:append-outer> </template>
+          </v-text-field>
+          <v-text-field
+            v-model="area"
+            counter
+            maxlength="25"
+            label="エリア・駅"
+            placeholder="例：渋谷、新宿駅"
+            outlined
+            clearable
+            prepend-inner-icon="mdi-map-marker"
+            style="display: inline-block"
+            class="form-text"
+          >
+          </v-text-field>
+          <div class="form-checkbox" style="display: inline-block">
+            <v-checkbox
+              v-model="deliverly"
+              true-value="1"
+              false-value="0"
+              label="デリバリー 可"
+              hide-details
+              class="shrink mr-2 mt-0"
+            ></v-checkbox>
+            <v-checkbox
+              v-model="takeout"
+              true-value="1"
+              false-value="0"
+              label="テイクアウト 可"
+              hide-details
+              class="shrink mr-2 mt-0"
+            ></v-checkbox>
+          </div>
+          <v-btn
+            @click="getShops"
+            outlined
+            color="primary"
+            x-large
+            class="form-area form-btn"
+          >
+            <v-icon left dark>mdi-magnify mdi-24px</v-icon>検索
+          </v-btn>
+        </v-col>
+        <v-col
+          v-for="c in category"
+          :key="c"
+          class="col-area"
+          cols="6"
+          lg="3"
+          sm="3"
+          xs="6"
         >
-          <template v-slot:append-outer> </template>
-        </v-text-field>
-        <v-text-field
-          v-model="area"
-          counter
-          maxlength="25"
-          label="エリア・駅"
-          placeholder="例：渋谷、新宿駅"
-          outlined
-          clearable
-          prepend-inner-icon="mdi-map-marker"
-          style="display: inline-block"
-          class="form-text"
-        >
-        </v-text-field>
-        <div class="form-checkbox" style="display: inline-block">
-          <v-checkbox
-            v-model="deliverly"
-            true-value="1"
-            false-value="0"
-            label="デリバリー 可"
-            hide-details
-            class="shrink mr-2 mt-0"
-          ></v-checkbox>
-          <v-checkbox
-            v-model="takeout"
-            true-value="1"
-            false-value="0"
-            label="テイクアウト 可"
-            hide-details
-            class="shrink mr-2 mt-0"
-          ></v-checkbox>
-        </div>
-        <v-btn
-          @click="getShops"
-          outlined
-          color="primary"
-          x-large
-          class="form-area form-btn"
-        >
-          <v-icon left dark>mdi-magnify mdi-24px</v-icon>検索
-        </v-btn>
-      </v-col>
-      <v-col
-        v-for="c in category"
-        :key="c"
-        class="col-area"
-        cols="6"
-        lg="3"
-        sm="3"
-        xs="6"
-      >
-        <CategorySearch
-          v-bind:category="c"
-          v-bind:area="area"
-          v-bind:deliverly="deliverly"
-          v-bind:takeout="takeout"
-        />
-      </v-col>
-    </v-row>
+          <CategorySearch
+            v-bind:category="c"
+            v-bind:area="area"
+            v-bind:deliverly="deliverly"
+            v-bind:takeout="takeout"
+          />
+        </v-col>
+      </v-row>
 
-    <ShopCardList />
-    <v-snackbar v-model="snackbar">
-      該当する飲食店は、ありませんでした。再度検索してみてください。
-    </v-snackbar>
-  </v-container>
+      <ShopCardList />
+      <v-snackbar v-model="snackbar">
+        該当する飲食店は、ありませんでした。再度検索してみてください。
+      </v-snackbar>
+    </v-container>
+  </div>
 </template>
 <script>
 import CategorySearch from "~/components/category_search.vue";
@@ -134,7 +136,10 @@ export default {
         this.area = "";
       }
       this.setParams({
-        freeword: this.freeword.replace(/\s+/g, ",") + "," + this.area.replace(/\s+/g, ","),
+        freeword:
+          this.freeword.replace(/\s+/g, ",") +
+          "," +
+          this.area.replace(/\s+/g, ","),
         deliverly: this.deliverly,
         takeout: this.takeout,
       });
