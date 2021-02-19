@@ -13,6 +13,9 @@
             本サービスは、デリバリーやテイクアウトを行っている飲食店のみを探し出し、<br />
             その飲食店のジャンルや、位置、営業情報などを提供するサービスです。<br />
           </p>
+          <v-btn href="#form-heading" color="#F9A825" large>
+            <v-icon left dark>mdi-magnify mdi-24px</v-icon>let's serach !
+          </v-btn>
         </div>
       </v-col>
     </v-row>
