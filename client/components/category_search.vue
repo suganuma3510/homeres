@@ -28,22 +28,15 @@
         </template>
       </v-img>
     </v-hover>
-    <v-snackbar v-model="snackbar">
-      該当する飲食店は、ありませんでした。再度検索してみてください。
-    </v-snackbar>
   </div>
 </template>
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapGetters, mapMutations, mapActions } from "vuex";
 
 export default {
   props: ["category", "area", "takeout", "deliverly"],
-  data: () => ({
-    snackbar: false,
-  }),
   computed: {
     ...mapGetters({
-      shopsTotalCount: "shops/shopsTotalCount",
       shops: "shops/shops",
       params: "shops/params",
     }),
@@ -51,41 +44,24 @@ export default {
   methods: {
     ...mapMutations({
       setIsSearched: "shops/setIsSearched",
-      setShopsTotalCount: "shops/setShopsTotalCount",
-      setShops: "shops/setShops",
       setParams: "shops/setParams",
+    }),
+    ...mapActions({
+      getShopList: "shops/getShopList",
     }),
     validateField() {
       this.$refs.form.validate();
     },
     getShops() {
-      var area;
-      if (this.$props.area == null) {
-        area = "";
-      } else {
-        area = this.$props.area.replace(/\s+/g, ",");
-      }
+      if (this.$props.area == null) area = "";
+      var searchWord;
+      searchWord = this.$props.category + "," + this.$props.area.replace(/\s+/g, ",");
       this.setParams({
-        freeword: this.$props.category + "," + area,
+        freeword: searchWord,
         deliverly: this.$props.deliverly,
         takeout: this.$props.takeout,
       });
-      this.$axios
-        .$get("/api/shops/search", { params: this.params })
-        .then((response) => {
-          console.log("response data", response);
-          if (response.total_hit_count != 0) {
-            this.setShops(response.rest);
-            this.setShopsTotalCount(response.total_hit_count);
-          } else {
-            this.snackbar = true;
-          }
-          this.setIsSearched();
-        })
-        .catch((error) => {
-          console.log("response error", error);
-          this.snackbar = true;
-        });
+      this.getShopList();
     },
   },
 };

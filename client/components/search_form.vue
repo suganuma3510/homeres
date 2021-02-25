@@ -78,20 +78,16 @@
       </v-row>
 
       <ShopCardList />
-      <v-snackbar v-model="snackbar">
-        該当する飲食店は、ありませんでした。再度検索してみてください。
-      </v-snackbar>
     </v-container>
   </div>
 </template>
 <script>
 import CategorySearch from "~/components/category_search.vue";
 import ShopCardList from "~/components/shop_card_list.vue";
-import { mapGetters, mapMutations } from "vuex";
+import { mapGetters, mapMutations, mapActions } from "vuex";
 
 export default {
   data: () => ({
-    snackbar: false,
     freeword: "",
     area: "",
     deliverly: "1",
@@ -107,58 +103,36 @@ export default {
       "ファーストフード",
     ],
   }),
-
   components: {
     CategorySearch,
     ShopCardList,
   },
-
   computed: {
     ...mapGetters({
+      isSearched: "shops/isSearched",
+      isNoResult: "shops/isNoResult",
       shopsTotalCount: "shops/shopsTotalCount",
       shops: "shops/shops",
-      params: "shops/params",
     }),
   },
-
   methods: {
     ...mapMutations({
-      setIsSearched: "shops/setIsSearched",
-      setShopsTotalCount: "shops/setShopsTotalCount",
-      setShops: "shops/setShops",
       setParams: "shops/setParams",
     }),
+    ...mapActions({
+      getShopList: "shops/getShopList",
+    }),
     getShops() {
-      if (this.freeword == null) {
-        this.freeword = "";
-      }
-      if (this.area == null) {
-        this.area = "";
-      }
+      if (this.freeword == null) this.freeword = "";
+      if (this.area == null) this.area = "";
+      var searchWord;
+      searchWord = this.freeword.replace(/\s+/g, ",") + "," + this.area.replace(/\s+/g, ",");
       this.setParams({
-        freeword:
-          this.freeword.replace(/\s+/g, ",") +
-          "," +
-          this.area.replace(/\s+/g, ","),
+        freeword: searchWord,
         deliverly: this.deliverly,
         takeout: this.takeout,
       });
-      this.$axios
-        .$get("/api/shops/search", { params: this.params })
-        .then((response) => {
-          console.log("response data", response);
-          if (response.total_hit_count != 0) {
-            this.setShops(response.rest);
-            this.setShopsTotalCount(response.total_hit_count);
-          } else {
-            this.snackbar = true;
-          }
-          this.setIsSearched();
-        })
-        .catch((error) => {
-          console.log("response error", error);
-          this.snackbar = true;
-        });
+      this.getShopList();
     },
   },
 };
