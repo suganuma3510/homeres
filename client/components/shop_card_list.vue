@@ -1,9 +1,9 @@
 <template>
   <div v-if="isSearched">
-    <h2 class="hit-count-label" v-if="shops.length != 0">
+    <h2 class="hit-count-label">
       全 {{ shopsTotalCount }} 件
     </h2>
-    <div v-if="shops.length != 0">
+    <div v-if="shopsTotalCount != 0">
       <div class="shops-list">
         <v-card
           v-for="(shop, index) in shops"
@@ -69,6 +69,9 @@
         <h3 slot="no-more">すべてのページを表示しました</h3>
         <h3 slot="no-results">すべてのページを表示しました</h3>
       </infinite-loading>
+    </div>
+    <div v-else>
+      <h3 class="text-center">該当する飲食店は、ありませんでした。再度検索してみてください。</h3>
     </div>
   </div>
 </template>
